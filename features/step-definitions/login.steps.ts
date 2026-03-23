@@ -18,19 +18,30 @@ Then(/^I should see the secure area$/, async () => {
 });
 
 Then(/^the page visually matches "([^"]*)" screenshot "([^"]*)"$/, async (type: string, screenshotPath: string) => {
-    // Pause 2 seconds (replace this with navigation to another URL in your implementation)
+    // Get browser info for baseline path
+    const { width, height } = await browser.getWindowSize();
+    const tag = 'desktop_chrome';
+    const fileName = `${screenshotPath}--${width}x${height}.png`;
+    
+    // 1. Baseline directory path
+    const baselineDir = path.join(process.cwd(), 'results', 'screenshots', 'baseline', tag, path.dirname(screenshotPath));
+    const baselinePath = path.join(baselineDir, path.basename(fileName));
+    
+    // 2. Create baseline directory if it doesn't exist
+    await fs.mkdir(baselineDir, { recursive: true });
+    
+    // 3. Save full page screenshot to baseline directory (creates/updates baseline)
+    await browser.saveFullPageScreen(baselinePath);
+    
+    // 4. Pause 2 seconds
     await browser.pause(2000);
-
-    // Perform visual comparison unconditionally on every run
-    // - First run: auto-creates baseline
-    // - Subsequent runs: compares against baseline
-    // - Throws error on mismatch > threshold
+    
+    // 5. Compare current page with baseline
     const result = await browser.checkFullPageScreen(screenshotPath);
     
     // result is the mismatch percentage (0 = identical)
     if (result > 0) {
         console.log(`Visual diff detected: ${result}% mismatch`);
-        // Actual and diff images are saved automatically by wdio-visual-service
     } else {
         console.log('Visual match: 0% difference');
     }
