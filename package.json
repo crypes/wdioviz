@@ -1,0 +1,30 @@
+{
+  "name": "wdioviz",
+  "version": "1.0.0",
+  "description": "Visual Testing example for WebdriverIO",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "wdio": "wdio run wdio.conf.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/crypes/wdioviz.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/crypes/wdioviz/issues"
+  },
+  "homepage": "https://github.com/crypes/wdioviz#readme",
+  "devDependencies": {
+    "@types/node": "^25.5.0",
+    "@wdio/cli": "^9.26.1",
+    "@wdio/cucumber-framework": "^9.26.1",
+    "@wdio/local-runner": "^9.26.1",
+    "@wdio/visual-service": "^9.2.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
